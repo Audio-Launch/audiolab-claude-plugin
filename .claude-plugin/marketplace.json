@@ -1,0 +1,16 @@
+{
+  "name": "audiolab-tools",
+  "owner": {
+    "name": "Nathan Renting",
+    "email": "partners@audiolab.tools",
+    "url": "https://audiolab.tools"
+  },
+  "plugins": [
+    {
+      "name": "audiolab",
+      "source": "./audiolab",
+      "description": "Audio analysis for AI agents — loudness (EBU R128 / BS.1770-4), true-peak, voice QA, spectrum, A/B compare — via the AudioLab hosted API. Ships an 'audiolab' skill and wires up the AudioLab MCP server.",
+      "version": "0.3.0"
+    }
+  ]
+}

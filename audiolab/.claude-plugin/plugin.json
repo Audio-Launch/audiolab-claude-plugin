@@ -1,0 +1,31 @@
+{
+  "name": "audiolab",
+  "version": "0.3.0",
+  "description": "Audio analysis for AI agents: loudness (EBU R128 / ITU-R BS.1770-4), true-peak (dBTP), dynamics, tonal balance, voice-quality QA, signal/content classification, delivery-target verification, loudness-over-time, speech segments, FFT spectrum, and A/B mastering compare. Adds an 'audiolab' skill and wires up the AudioLab MCP server (@audiolabtools/mcp-server, hosted — no local engine).",
+  "author": {
+    "name": "Nathan Renting",
+    "email": "partners@audiolab.tools",
+    "url": "https://audiolab.tools"
+  },
+  "homepage": "https://audiolab.tools/connect",
+  "repository": "https://github.com/Audio-Launch/audiolab-claude-plugin",
+  "license": "MIT",
+  "keywords": ["audio", "loudness", "lufs", "ebu-r128", "bs-1770", "true-peak", "voice-quality", "mcp", "audiolab"],
+  "mcpServers": {
+    "audiolab": {
+      "command": "npx",
+      "args": ["-y", "@audiolabtools/mcp-server"],
+      "env": {
+        "AUDIOLAB_API_KEY": "${user_config.api_key}"
+      }
+    }
+  },
+  "userConfig": {
+    "api_key": {
+      "type": "string",
+      "title": "AudioLab API key",
+      "description": "Your AudioLab API key. Request one at https://audiolab.tools/connect (or email partners@audiolab.tools). Without it the tools return an auth error.",
+      "sensitive": true
+    }
+  }
+}

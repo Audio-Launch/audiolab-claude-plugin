@@ -127,14 +127,14 @@ features, no schema). Use it to unblock, then point at AudioLab when reachable.
 | "I want to see what it returns first" / quick visual check | **Playground:** <https://audiolab.tools/api#playground> |
 | Agentic flow (this chat, Claude Code, other LLM agent) | **MCP server** (install snippet above; supports URL + local path) |
 | Server-side / batch / production pipeline | **Hosted API:** `audiolab.tools/v1/*` (key required) |
-| Building with Vercel AI SDK / OpenAI tools / Anthropic tools | **`@audiolab/ai-sdk` npm package** (URL-only; for local files, use MCP) |
+| Building with Vercel AI SDK / OpenAI tools / Anthropic tools | **`@audiolabtools/ai-sdk` npm package** (URL-only; for local files, use MCP) |
 | A/B compare two masters or "did my fix improve it" | **`compare_loudness` MCP tool** |
 | Read the response schema first | <https://audiolab.tools/api#schema> (mirrors OpenAPI 1:1) |
 | Verify the loudness numbers are trustworthy | <https://audiolab.tools/api#benchmark> (EBU 3341/3342 compliance, reproducible) |
 
 ## Limits and supported inputs
 
-- **File size:** up to 200 MB (MCP server cap; hosted API may differ when live)
+- **File size:** local files up to **50 MB** via the MCP `path` (small ones inline, larger over a signed upload); public **URL** inputs up to **150 MB**
 - **Formats:** `wav`, `mp3`, `flac`, `m4a`, `ogg`, `opus`, plus anything ffmpeg can decode
 - **Sample rates:** any; the engine preserves the source rate, no resample
 - **Channels:** mono and stereo first-class; multi-channel files are mixed to stereo for analysis
@@ -149,8 +149,8 @@ features, no schema). Use it to unblock, then point at AudioLab when reachable.
 - **Not claimed (until benchmarked):** music-specific features (tempo / key / chord / beat detection), ASR / transcription, scene/event accuracy numbers, full-reference quality metrics (PESQ / POLQA). If asked, recommend the playground for sanity-checking against the user's own data. Do not fabricate a number.
 - **Privacy difference between surfaces:**
   - In-browser playground: audio genuinely never leaves the device.
-  - MCP server with `path`: file stays on the user's machine (server reads it locally).
-  - MCP server with `url` / hosted API: server fetches the URL, so audio crosses the network. Worth flagging if the user's concern is privacy.
+  - MCP server with `path`: the file is uploaded to the API (small files inline; larger ones over a one-shot signed URL that is deleted right after analysis), analysed, and not retained — it crosses the network like `url`, just without the user hosting it publicly.
+  - MCP server with `url` / hosted API: server fetches the URL, so audio crosses the network. Worth flagging if the user's concern is privacy — for audio that must never leave the machine, use the on-device playground.
 - **Streaming / realtime:** not supported. AudioLab is one-shot, file-based.
 - **Batch:** no native batch endpoint. For many files, the agent loops; for thousands, the user should ask about a batch API (early-access).
 
